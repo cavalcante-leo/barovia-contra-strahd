@@ -1,0 +1,65 @@
+body.page-tropas{display:flex;flex-direction:column;min-height:100vh}
+.page-tropas .page-content{max-width:1200px}
+
+/* ============ RECURSOS ============ */
+.resources-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.res-card{
+  background:var(--paper);border:1px solid var(--ink);padding:16px 18px;
+  position:relative;overflow:hidden;
+}
+.res-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--teal-dark)}
+.res-card.coral::before{background:var(--coral)}
+.res-card.cream::before{background:var(--cream);border-bottom:1px solid var(--ink)}
+.res-card.dark::before{background:var(--gray-4)}
+
+.res-card .rc-label{font-size:10px;text-transform:uppercase;letter-spacing:0.14em;
+  color:var(--teal-dark);font-weight:800;margin-bottom:8px}
+.res-card.coral .rc-label{color:var(--coral-dark)}
+.res-card .rc-val{font-size:42px;font-weight:900;letter-spacing:-0.06em;line-height:1;color:var(--ink)}
+.res-card .rc-sub{font-size:10.5px;color:var(--gray-3);text-transform:uppercase;
+  letter-spacing:0.08em;font-weight:600;margin-top:6px}
+.res-card .stepper{display:flex;gap:5px;margin-top:14px}
+.res-card .stepper button{
+  width:30px;height:30px;border:1px solid var(--ink);background:var(--paper);
+  color:var(--ink);font-size:16px;line-height:1;font-weight:700;padding:0;
+}
+.res-card .stepper button:hover{background:var(--teal-dark);color:var(--cream);border-color:var(--teal-dark)}
+.res-card .stepper button:disabled{opacity:.3;cursor:not-allowed;background:var(--paper);color:var(--ink)}
+
+/* ============ TROPAS ============ */
+.troops-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.troop-card{
+  background:var(--paper);border:1px solid var(--ink);padding:16px 18px 14px;
+  position:relative;transition:transform .12s, box-shadow .12s;
+}
+.troop-card:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--teal-dark)}
+.troop-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--teal-mid)}
+.troop-card.mortosvivos::before{background:var(--coral)}
+.troop-card.coletores::before{background:var(--cream);border-right:1px solid var(--ink)}
+.troop-card.dragoes::before{background:var(--teal-dark)}
+.troop-card.pena::before{background:var(--gray-4)}
+
+.troop-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:10px}
+.troop-name{font-size:14px;font-weight:800;letter-spacing:-0.015em;line-height:1.25}
+.troop-count{
+  font-size:24px;font-weight:900;background:var(--teal-dark);color:var(--cream);
+  padding:3px 12px;min-width:44px;text-align:center;letter-spacing:-0.04em;line-height:1;
+}
+.troop-desc{font-size:12px;color:var(--gray-4);line-height:1.5;margin:0 0 14px;
+  border-top:1px dashed var(--gray-1);padding-top:10px;min-height:44px}
+.troop-foot{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.troop-foot .meta{font-size:10px;color:var(--teal-mid);text-transform:uppercase;
+  letter-spacing:0.1em;font-weight:700}
+.troop-foot .stepper{display:flex;gap:5px}
+.troop-foot .stepper button{
+  width:30px;height:30px;border:1px solid var(--ink);background:var(--paper);
+  color:var(--ink);font-size:16px;line-height:1;font-weight:700;padding:0;
+}
+.troop-foot .stepper button:hover{background:var(--teal-dark);color:var(--cream);border-color:var(--teal-dark)}
+.troop-foot .stepper button:disabled{opacity:.3;cursor:not-allowed;background:var(--paper);color:var(--ink)}
+
+@media (max-width:700px){
+  .page-content{padding:18px 16px 40px}
+  .main-nav{order:3;margin-left:0;width:100%;justify-content:center}
+  .res-card .rc-val{font-size:34px}
+}
