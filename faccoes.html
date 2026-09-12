@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conselho de Guerra — Facções</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/css/base.css">
+<link rel="stylesheet" href="src/css/layout.css">
+<link rel="stylesheet" href="src/css/faccoes.css">
+</head>
+<body class="page-faccoes">
+
+<header class="topbar">
+  <div class="brand">
+    <span class="sigil">CG</span>
+    <div>
+      <h1>Conselho de Guerra</h1>
+      <p class="subtitle">Baróvia - A Campanha contra Strahd</p>
+    </div>
+  </div>
+  <nav class="main-nav">
+    <a href="index.html" class="nav-link">Mapa &amp; Missões</a>
+    <a href="tropas.html" class="nav-link">Tropas &amp; Recursos</a>
+    <a href="faccoes.html" class="nav-link active">Facções</a>
+  </nav>
+  <div class="ciclo-box">
+    <button id="cicloMenos">−</button>
+    <div><span class="label">Ciclo</span><strong id="cicloValor">1</strong></div>
+    <button id="cicloMais">+</button>
+  </div>
+  <div class="io-box">
+    <button id="btnExport" title="Exportar dados (JSON)">↓</button>
+    <button id="btnImport" title="Importar dados (JSON)">↑</button>
+    <input type="file" id="fileImport" accept=".json,application/json" hidden>
+  </div>
+</header>
+
+<div class="page-content">
+  <div class="page-header">
+    <div>
+      <h2>Facções</h2>
+      <p>Influência - Espiões - Tropas - Status</p>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" id="btnNovaFaccao">+ Nova Facção</button>
+    </div>
+  </div>
+
+  <div class="summary-bar">
+    <div class="sb-item">
+      <span class="sb-label">Total de Facções</span>
+      <span class="sb-val" id="sbTotal">0</span>
+    </div>
+    <div class="sb-item">
+      <span class="sb-label">Hostis</span>
+      <span class="sb-val warn" id="sbHostis">0</span>
+    </div>
+    <div class="sb-item">
+      <span class="sb-label">Espiões Ativos</span>
+      <span class="sb-val warn" id="sbEspioes">0</span>
+    </div>
+    <div class="sb-item">
+      <span class="sb-label">Influência Strahd</span>
+      <span class="sb-val warn" id="sbInfluencia">0</span>
+    </div>
+  </div>
+
+  <div class="faccoes-grid" id="faccoesList"></div>
+</div>
+
+<div class="modal-backdrop" id="modal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modalTitle">Nova Facção</h2>
+      <button class="icon-btn" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script src="src/js/core/constants.js"></script>
+<script src="src/js/core/helpers.js"></script>
+<script src="src/js/core/storage.js"></script>
+<script src="src/js/core/state.js"></script>
+<script src="src/js/core/io.js"></script>
+<script src="src/js/ui/dom.js"></script>
+<script src="src/js/ui/modal.js"></script>
+<script src="src/js/ui/topbar.js"></script>
+<script src="src/js/pages/faccoes.js"></script>
+</body>
+</html>

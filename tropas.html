@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conselho de Guerra — Tropas &amp; Recursos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/css/base.css">
+<link rel="stylesheet" href="src/css/layout.css">
+<link rel="stylesheet" href="src/css/tropas.css">
+</head>
+<body class="page-tropas">
+
+<header class="topbar">
+  <div class="brand">
+    <span class="sigil">CG</span>
+    <div>
+      <h1>Conselho de Guerra</h1>
+      <p class="subtitle">Baróvia - A Campanha contra Strahd</p>
+    </div>
+  </div>
+  <nav class="main-nav">
+    <a href="index.html" class="nav-link">Mapa &amp; Missões</a>
+    <a href="tropas.html" class="nav-link active">Tropas &amp; Recursos</a>
+    <a href="faccoes.html" class="nav-link">Facções</a>
+  </nav>
+  <div class="ciclo-box">
+    <button id="cicloMenos">−</button>
+    <div><span class="label">Ciclo</span><strong id="cicloValor">1</strong></div>
+    <button id="cicloMais">+</button>
+  </div>
+  <div class="io-box">
+    <button id="btnExport" title="Exportar dados (JSON)">↓</button>
+    <button id="btnImport" title="Importar dados (JSON)">↑</button>
+    <input type="file" id="fileImport" accept=".json,application/json" hidden>
+  </div>
+</header>
+
+<div class="page-content">
+  <div class="page-header">
+    <div>
+      <h2>Tropas &amp; Recursos</h2>
+      <p>Fortaleza de Krezk - Logística do Conselho</p>
+    </div>
+    <button class="btn btn-ghost" id="btnReset">Reiniciar Conselho</button>
+  </div>
+
+  <div class="summary-bar">
+    <div class="sb-item">
+      <span class="sb-label">Total de Tropas</span>
+      <span class="sb-val" id="sbTotal">0</span>
+    </div>
+    <div class="sb-item">
+      <span class="sb-label">Capacidade</span>
+      <span class="sb-val" id="sbCap">0/10</span>
+    </div>
+    <div class="sb-item">
+      <span class="sb-label">Influência de Strahd</span>
+      <span class="sb-val warn" id="sbInf">0</span>
+    </div>
+    <div class="sb-item">
+      <span class="sb-label">Ciclo Atual</span>
+      <span class="sb-val" id="sbCiclo">1</span>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-head">
+      <h3>Recursos da Fortaleza</h3>
+      <span class="meta">Estoque atual</span>
+    </div>
+    <div class="resources-grid">
+      <div class="res-card">
+        <div class="rc-label">Recursos</div>
+        <div class="rc-val" id="rcRecursos">0</div>
+        <div class="rc-sub">Suprimentos - Comida - Materiais</div>
+        <div class="stepper">
+          <button data-rec="recursos" data-d="-1">−</button>
+          <button data-rec="recursos" data-d="1">+</button>
+        </div>
+      </div>
+      <div class="res-card coral">
+        <div class="rc-label">Metais</div>
+        <div class="rc-val" id="rcMetais">0</div>
+        <div class="rc-sub">Madalena - Engenharia</div>
+        <div class="stepper">
+          <button data-rec="metais" data-d="-1">−</button>
+          <button data-rec="metais" data-d="1">+</button>
+        </div>
+      </div>
+      <div class="res-card dark">
+        <div class="rc-label">Influência de Strahd</div>
+        <div class="rc-val" id="rcInfluencia">0</div>
+        <div class="rc-sub">Soma das facções hostis</div>
+        <div class="stepper">
+          <button data-rec="influencia" data-d="-1">−</button>
+          <button data-rec="influencia" data-d="1">+</button>
+        </div>
+      </div>
+      <div class="res-card cream">
+        <div class="rc-label">Tropas Totais</div>
+        <div class="rc-val"><span id="rcTropas">0</span><span style="font-size:16px;color:var(--gray-3);font-weight:700;">/10</span></div>
+        <div class="rc-sub">Máximo permitido</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h3>Composição das Tropas</h3>
+      <span class="meta">Distribuição por tipo</span>
+    </div>
+    <div class="troops-grid" id="tropasList"></div>
+  </section>
+</div>
+
+<script src="src/js/core/constants.js"></script>
+<script src="src/js/core/helpers.js"></script>
+<script src="src/js/core/storage.js"></script>
+<script src="src/js/core/state.js"></script>
+<script src="src/js/core/io.js"></script>
+<script src="src/js/ui/dom.js"></script>
+<script src="src/js/ui/topbar.js"></script>
+<script src="src/js/pages/tropas.js"></script>
+</body>
+</html>
