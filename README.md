@@ -154,7 +154,6 @@ FLASK_ENV=development
 ```bash
 mkdir instance            # Windows: New-Item -ItemType Directory -Force instance
 alembic upgrade head
-python seed.py
 ```
 
 ### 5. Subir o servidor

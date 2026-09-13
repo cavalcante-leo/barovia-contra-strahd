@@ -7,7 +7,7 @@ services:
     runtime: python
     plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: alembic upgrade head && python seed.py && gunicorn -w 2 -b 0.0.0.0:$PORT app:app
+    startCommand: alembic upgrade head && gunicorn -w 2 -b 0.0.0.0:$PORT app:app
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.10
