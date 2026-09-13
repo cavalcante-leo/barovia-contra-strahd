@@ -6,11 +6,14 @@ from models import Aliado, Estado, Local, Missao, Tropa
 
 bp = Blueprint('public', __name__, url_prefix='/api/public')
 
-
 @bp.get('/estado')
 def estado():
     db = get_db()
     est = db.get(Estado, 1)
+    
+    if est is None:
+        return jsonify({'error': 'Estado não inicializado'}), 503
+
     return jsonify({
         'estado': {
             'ciclo': est.ciclo,
