@@ -15,6 +15,16 @@ app.register_blueprint(auth.bp)
 app.register_blueprint(public.bp)
 app.register_blueprint(master.bp)
 
+
+@app.before_request
+def _garantir_estado():
+    """Garante a linha única de Estado em qualquer forma de inicialização.
+
+    É idempotente: cria apenas se não existir e nunca sobrescreve dados.
+    """
+    ensure_estado(get_db())
+
+
 @app.route('/')
 def raiz():
     return render_template('jogador/index.html')
@@ -33,8 +43,6 @@ def mestre_index():
 
 
 if __name__ == '__main__':
-    with app.app_context():
-        ensure_estado(get_db())
     porta = int(os.environ.get('PORT', 5000))
     debug = os.environ.get('FLASK_ENV') != 'production'
     app.run(debug=debug, host='0.0.0.0', port=porta)

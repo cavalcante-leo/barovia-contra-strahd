@@ -32,10 +32,10 @@ class Estado(Base):
     )
 
 def ensure_estado(db) -> Estado:
-    """Busca ou cria uma uníca linha de Estado."""
+    """Busca ou cria a única linha de Estado (idempotente; nunca reseta dados)."""
     est = db.get(Estado, 1)
     if est is None:
-        est = Estado(id=1)         
+        est = Estado(id=1)
         db.add(est)
         db.commit()
     return est
