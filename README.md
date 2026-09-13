@@ -1,5 +1,7 @@
 # Conselho de Guerra — Baróvia
 
+[![CI](https://github.com/cavalcante-leo/barovia-contra-strahd/actions/workflows/ci.yml/badge.svg)](https://github.com/cavalcante-leo/barovia-contra-strahd/actions/workflows/ci.yml)
+
 Quadro de avisos interativo para uma campanha de **Curse of Strahd** (D&D 5e). O **mestre** publica missões, tropas e recursos; os **jogadores** consultam tudo em modo leitura, principalmente pelo celular.
 
 ---
@@ -208,11 +210,19 @@ Arquivos prontos para deploy:
 
 | Documento | Conteúdo |
 |---|---|
+| [RELEASE-v1.2.md](RELEASE-v1.2.md) | Descritivo da release v1.2 |
 | [docs/API.md](docs/API.md) | Referência dos endpoints |
 | [docs/ARQUITETURA.md](docs/ARQUITETURA.md) | Componentes e modelo de dados |
 | [docs/DESENVOLVIMENTO.md](docs/DESENVOLVIMENTO.md) | Setup, testes, migrations e convenções |
 | [docs/GUIA-MESTRE.md](docs/GUIA-MESTRE.md) | Como usar o painel do mestre |
 | [docs/GUIA-JOGADOR.md](docs/GUIA-JOGADOR.md) | Como consultar o conselho |
+
+## Integração contínua
+
+O workflow [`.github/workflows/ci.yml`](.github/workflows/ci.yml) roda em push/PR para `main` e `develop`:
+
+- **Testes:** `pytest -q` (Python 3.12).
+- **Build:** valida as migrations em um SQLite limpo e constrói a imagem Docker.
 
 ## Licença
 
