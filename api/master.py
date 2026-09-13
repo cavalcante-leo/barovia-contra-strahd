@@ -5,7 +5,7 @@ from flask import Blueprint, jsonify, request, session
 from sqlalchemy import select
 
 from db import get_db
-from models import Aliado, Estado, Local, Missao, MissaoAliado, MissaoTropa, Tropa
+from models import Aliado, Estado, Local, Missao, MissaoAliado, MissaoTropa, Tropa, ensure_estado
 
 bp = Blueprint('master', __name__, url_prefix='/api/master')
 
@@ -37,7 +37,7 @@ def _int(value, default=0):
 def atualizar_estado():
     data = request.get_json(silent=True) or {}
     db = get_db()
-    est = db.get(Estado, 1)
+    est = ensure_estado(db)
     for campo in ('ciclo', 'madeira', 'pedra', 'metais', 'suprimentos'):
         if campo in data:
             setattr(est, campo, max(0, _int(data[campo], getattr(est, campo))))
@@ -326,7 +326,7 @@ def deletar_missao(mid):
 @requer_mestre
 def exportar():
     db = get_db()
-    est = db.get(Estado, 1)
+    est = ensure_estado(db)
     return jsonify({
         'estado': {
             'ciclo': est.ciclo, 'madeira': est.madeira, 'pedra': est.pedra,

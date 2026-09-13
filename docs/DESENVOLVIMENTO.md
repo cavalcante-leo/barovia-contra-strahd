@@ -10,7 +10,6 @@ pip install -r requirements.txt -r requirements-dev.txt
 cp .env.example .env        # preencha SECRET_KEY e MASTER_PASSWORD_HASH
 mkdir instance              # Windows: New-Item -ItemType Directory -Force instance
 alembic upgrade head
-python seed.py
 
 python app.py               # http://localhost:5000
 ```

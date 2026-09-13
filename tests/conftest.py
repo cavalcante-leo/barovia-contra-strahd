@@ -13,15 +13,29 @@ os.environ['MASTER_PASSWORD_HASH'] = generate_password_hash('mestre')
 
 from app import app as flask_app  # noqa: E402
 from db import SessionLocal, engine  # noqa: E402
-from models import Base  # noqa: E402
-from seed import seed  # noqa: E402
+from models import Aliado, Base, Local, Tropa, ensure_estado  # noqa: E402
 
 
 @pytest.fixture(scope='session', autouse=True)
 def _database():
     Base.metadata.create_all(engine)
-    seed()
+
+    session = SessionLocal()
+    try:
+        ensure_estado(session)
+        session.add(Local(id='vallaki', nome='Vallaki', status='Neutro', x=42, y=25))
+        session.add(Tropa(id='dragoes', nome='Cavaleiros Dragões',
+                          descricao='Treinados nos dogmas de Aurore.', quantidade=1))
+        session.add(Aliado(id='marius', nome='Marius',
+                           bonus='+2 em Controle', habilidade='Bastião.'))
+        session.add(Aliado(id='elvira', nome='Elvira',
+                           bonus='+2 em Controle', habilidade='Juri, Juíza e Executora.'))
+        session.commit()
+    finally:
+        SessionLocal.remove()
+
     yield
+
     Base.metadata.drop_all(engine)
     SessionLocal.remove()
     engine.dispose()

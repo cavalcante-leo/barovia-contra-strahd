@@ -2,15 +2,15 @@ from flask import Blueprint, jsonify
 from sqlalchemy import select
 
 from db import get_db
-from models import Aliado, Estado, Local, Missao, Tropa
+from models import Aliado, Estado, Local, Missao, Tropa, ensure_estado
 
 bp = Blueprint('public', __name__, url_prefix='/api/public')
-
 
 @bp.get('/estado')
 def estado():
     db = get_db()
-    est = db.get(Estado, 1)
+    est = ensure_estado(db)
+
     return jsonify({
         'estado': {
             'ciclo': est.ciclo,
