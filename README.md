@@ -65,8 +65,7 @@ Navegador ──HTTP──► Flask (Gunicorn/Waitress) ──SQLAlchemy──�
 ├── app.py                 # entrypoint Flask + rotas de páginas
 ├── config.py              # .env, paths e sessão
 ├── db.py                  # engine/sessão SQLAlchemy (WAL, FK, busy_timeout)
-├── models.py              # 5 tabelas
-├── seed.py                # dados iniciais (idempotente)
+├── models.py              # modelos (7 tabelas)
 ├── alembic.ini
 ├── migrations/            # env.py + versions/
 ├── api/
@@ -152,6 +151,8 @@ FLASK_ENV=development
 mkdir instance            # Windows: New-Item -ItemType Directory -Force instance
 alembic upgrade head
 ```
+
+> Não há seed automático. A linha única de `estado` é criada na primeira inicialização (idempotente, sem resetar dados); tropas, locais e aliados começam vazios e são cadastrados pelo painel do mestre.
 
 ### 5. Subir o servidor
 

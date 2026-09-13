@@ -31,13 +31,14 @@ Aplicação **cliente-servidor** de três camadas, executada em um único proces
 | `app.py` | Cria o app Flask, registra blueprints e define as páginas. Protege `/mestre/`. |
 | `config.py` | Carrega `.env` e define `SECRET_KEY`, `MASTER_PASSWORD_HASH`, `DB_PATH` e cookies de sessão. |
 | `db.py` | Engine SQLite (WAL, `foreign_keys`, `busy_timeout`) e sessão `scoped_session` por request. |
-| `models.py` | 5 modelos: `Estado`, `Tropa`, `Local`, `Missao`, `MissaoTropa`. |
-| `seed.py` | Popula estado, tropas e locais iniciais (idempotente). |
+| `models.py` | Modelos: `Estado`, `Tropa`, `Aliado`, `Local`, `Missao`, `MissaoTropa`, `MissaoAliado`. Inclui `ensure_estado()` (cria a linha única de estado, idempotente). |
 | `api/auth.py` | Login/logout/status com hash do Werkzeug e sessão Flask. |
 | `api/public.py` | Leitura pública (estado e missões). |
-| `api/master.py` | Escrita: estado, locais, tropas, missões e export. |
+| `api/master.py` | Escrita: estado, locais, tropas, aliados, missões e export. |
 | `static/js/*` | Frontend em ES modules. |
 | `templates/*` | Jinja apenas para `base.html`. |
+
+> Não há seed automático. O `app.py` registra um `before_request` que chama `ensure_estado()` — a linha de `estado` é criada se faltar, sem sobrescrever dados.
 
 ## Modelo de dados
 
