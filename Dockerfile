@@ -13,4 +13,4 @@ RUN mkdir -p instance
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "alembic upgrade head && python seed.py && gunicorn -w 2 -b 0.0.0.0:${PORT:-8000} app:app"]
+CMD ["sh", "-c", "alembic upgrade head && gunicorn -w 2 -b 0.0.0.0:${PORT:-8000} app:app"]
