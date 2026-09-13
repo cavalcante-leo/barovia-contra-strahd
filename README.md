@@ -2,8 +2,6 @@
 
 Quadro de avisos interativo para uma campanha de **Curse of Strahd** (D&D 5e). O **mestre** publica missões, tropas e recursos; os **jogadores** consultam tudo em modo leitura, principalmente pelo celular.
 
-> **O app não calcula nada.** A DT é digitada pelo mestre. Não há rolagem, penalidades, resolução de missão nem facções. É um mural, não um motor de regras.
-
 ---
 
 ## Índice
@@ -17,7 +15,6 @@ Quadro de avisos interativo para uma campanha de **Curse of Strahd** (D&D 5e). O
 - [Acessos](#acessos)
 - [Testes](#testes)
 - [API (resumo)](#api-resumo)
-- [Deploy](#deploy)
 - [Documentação](#documentação)
 - [Convenções](#convenções)
 - [Licença](#licença)
@@ -149,7 +146,7 @@ FLASK_ENV=development
 
 > O valor de `MASTER_PASSWORD_HASH` deve começar com `scrypt:` **uma única vez**.
 
-### 4. Criar o banco e popular
+### 4. Criar o banco
 
 ```bash
 mkdir instance            # Windows: New-Item -ItemType Directory -Force instance
@@ -199,37 +196,22 @@ Detalhes em [docs/API.md](docs/API.md).
 
 ## Deploy
 
-> **Netlify não hospeda este app.** Ele serve sites estáticos/funções serverless e não executa um servidor Python persistente nem SQLite. Use um host Python (Render, Railway, Fly.io, PythonAnywhere ou VPS).
-
 Arquivos prontos para deploy:
 
 - `.python-version` / `runtime.txt` — fixam **Python 3.12** (o SQLAlchemy 2.0 não é compatível com Python 3.14).
 - `Procfile` — `gunicorn` (Heroku/Railway).
 - `render.yaml` — blueprint do Render.
-- `Dockerfile` — imagem Python 3.12 com migrations + seed + Gunicorn.
-
-Instruções completas (Gunicorn + Nginx, Waitress, Docker, Render, migrations e backup) em [ai-context/deploy.md](ai-context/deploy.md).
+- `Dockerfile` — imagem Python 3.12 com migrations + Gunicorn.
 
 ## Documentação
 
 | Documento | Conteúdo |
 |---|---|
-| [refactor.md](refactor.md) | Especificação do escopo reduzido (v3) |
-| [ai-context/contexto.md](ai-context/contexto.md) | Briefing canônico e design system |
-| [ai-context/deploy.md](ai-context/deploy.md) | Deploy, produção, migrations e backup |
 | [docs/API.md](docs/API.md) | Referência dos endpoints |
 | [docs/ARQUITETURA.md](docs/ARQUITETURA.md) | Componentes e modelo de dados |
 | [docs/DESENVOLVIMENTO.md](docs/DESENVOLVIMENTO.md) | Setup, testes, migrations e convenções |
 | [docs/GUIA-MESTRE.md](docs/GUIA-MESTRE.md) | Como usar o painel do mestre |
 | [docs/GUIA-JOGADOR.md](docs/GUIA-JOGADOR.md) | Como consultar o conselho |
-
-## Convenções
-
-- **Sem emojis** na UI ou nas respostas da API.
-- **Sem `border-radius`** e cores restritas à paleta pen & paper.
-- **Sem cálculo no app**: a DT é sempre digitada pelo mestre.
-- Rotas `/api/master/*` sempre com `@requer_mestre`.
-- `.env` e `instance/` nunca vão para o Git.
 
 ## Licença
 
