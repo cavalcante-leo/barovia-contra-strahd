@@ -1,0 +1,19 @@
+# Deploy no Render (https://render.com) — host Python para Flask.
+# Obs.: no plano free o disco é efêmero (o SQLite reinicia a cada deploy/reinício).
+# Para persistir, use um Disk (pago) e defina DB_PATH apontando para o mount.
+services:
+  - type: web
+    name: conselho-de-guerra
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: alembic upgrade head && python seed.py && gunicorn -w 2 -b 0.0.0.0:$PORT app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.10
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: MASTER_PASSWORD_HASH
+        sync: false
