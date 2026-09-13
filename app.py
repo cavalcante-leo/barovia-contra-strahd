@@ -4,7 +4,8 @@ from flask import Flask, redirect, render_template, session, url_for
 
 from api import auth, master, public
 from config import Config
-from db import close_db
+from db import get_db, close_db
+from models import ensure_estado
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 app.config.from_object(Config)
@@ -13,7 +14,6 @@ app.teardown_appcontext(close_db)
 app.register_blueprint(auth.bp)
 app.register_blueprint(public.bp)
 app.register_blueprint(master.bp)
-
 
 @app.route('/')
 def raiz():
@@ -33,6 +33,8 @@ def mestre_index():
 
 
 if __name__ == '__main__':
+    with app.app_context():
+        ensure_estado(get_db())
     porta = int(os.environ.get('PORT', 5000))
     debug = os.environ.get('FLASK_ENV') != 'production'
     app.run(debug=debug, host='0.0.0.0', port=porta)

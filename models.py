@@ -15,7 +15,6 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 class Base(DeclarativeBase):
     pass
 
-
 class Estado(Base):
     """Linha única de estado global (id = 1)."""
 
@@ -32,6 +31,14 @@ class Estado(Base):
         DateTime, server_default=func.now(), onupdate=func.now()
     )
 
+def ensure_estado(db) -> Estado:
+    """Busca ou cria uma uníca linha de Estado."""
+    est = db.get(Estado, 1)
+    if est is None:
+        est = Estado(id=1)         
+        db.add(est)
+        db.commit()
+    return est
 
 class Tropa(Base):
     """Catálogo de tropas + estoque."""
