@@ -200,7 +200,16 @@ Detalhes em [docs/API.md](docs/API.md).
 
 ## Deploy
 
-Instruções completas (Gunicorn + Nginx, Waitress, Docker, migrations e backup) em [ai-context/deploy.md](ai-context/deploy.md).
+> **Netlify não hospeda este app.** Ele serve sites estáticos/funções serverless e não executa um servidor Python persistente nem SQLite. Use um host Python (Render, Railway, Fly.io, PythonAnywhere ou VPS).
+
+Arquivos prontos para deploy:
+
+- `.python-version` / `runtime.txt` — fixam **Python 3.12** (o SQLAlchemy 2.0 não é compatível com Python 3.14).
+- `Procfile` — `gunicorn` (Heroku/Railway).
+- `render.yaml` — blueprint do Render.
+- `Dockerfile` — imagem Python 3.12 com migrations + seed + Gunicorn.
+
+Instruções completas (Gunicorn + Nginx, Waitress, Docker, Render, migrations e backup) em [ai-context/deploy.md](ai-context/deploy.md).
 
 ## Documentação
 
