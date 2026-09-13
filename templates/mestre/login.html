@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1b4b4b">
+<title>Conselho de Guerra — Entrar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="page-login">
+
+<header class="topbar">
+  <div class="brand">
+    <span class="sigil">CG</span>
+    <div>
+      <h1>Conselho de Guerra</h1>
+      <p class="subtitle">Baróvia - A Campanha contra Strahd</p>
+    </div>
+  </div>
+  <div class="topbar-actions">
+    <a href="/" class="link-btn">Mapa</a>
+  </div>
+</header>
+
+<div class="login-wrap">
+  <form class="login-card" id="login">
+    <h2>Acesso do Mestre</h2>
+    <div class="field">
+      <label for="senha">Senha do Mestre</label>
+      <input type="password" id="senha" autocomplete="current-password" autofocus>
+    </div>
+    <button class="btn btn-primary" type="submit" style="width:100%">Entrar</button>
+    <p class="login-error" id="loginErro"></p>
+  </form>
+</div>
+
+<script type="module">
+  import { API } from '/static/js/api.js';
+  const form = document.getElementById('login');
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    const erro = document.getElementById('loginErro');
+    erro.textContent = '';
+    try {
+      await API.post('/api/auth/login', { senha: document.getElementById('senha').value });
+      location.href = '/mestre/';
+    } catch (err) {
+      erro.textContent = err.status === 401 ? 'Senha inválida.' : err.message;
+    }
+  };
+</script>
+</body>
+</html>
