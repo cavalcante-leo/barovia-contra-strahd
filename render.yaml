@@ -1,6 +1,5 @@
 # Deploy no Render (https://render.com) — host Python para Flask.
-# Obs.: no plano free o disco é efêmero (o SQLite reinicia a cada deploy/reinício).
-# Para persistir, use um Disk (pago) e defina DB_PATH apontando para o mount.
+# O banco fica no Supabase (PostgreSQL); defina DATABASE_URL como secret.
 services:
   - type: web
     name: conselho-de-guerra
@@ -16,4 +15,6 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: MASTER_PASSWORD_HASH
+        sync: false
+      - key: DATABASE_URL
         sync: false

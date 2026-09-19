@@ -54,6 +54,7 @@ jobs:
       - name: Validar migrations (SQLite limpo)
         env:
           DB_PATH: instance/ci.db
+          DATABASE_URL: ''
         run: |
           mkdir -p instance
           alembic upgrade head

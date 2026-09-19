@@ -39,7 +39,7 @@ Quadro de avisos interativo para uma campanha de **Curse of Strahd** (D&D 5e). O
 | Camada | Tecnologia |
 |---|---|
 | Backend | Flask 3 (Python 3.11+) |
-| Banco | SQLite via SQLAlchemy 2.0 ORM |
+| Banco | PostgreSQL (Supabase) via SQLAlchemy 2.0 ORM — SQLite local como fallback |
 | Migrations | Alembic |
 | Frontend | HTML + CSS + JavaScript puro (**ES modules**) |
 | Templates | Jinja2 (apenas `base.html`) |
@@ -48,7 +48,7 @@ Quadro de avisos interativo para uma campanha de **Curse of Strahd** (D&D 5e). O
 ## Arquitetura
 
 ```
-Navegador ──HTTP──► Flask (Gunicorn/Waitress) ──SQLAlchemy──► instance/app.db (SQLite)
+Navegador ──HTTP──► Flask (Gunicorn/Waitress) ──SQLAlchemy──► PostgreSQL (Supabase)
    │                       │
    │                       ├── /api/auth/*    → login/logout do mestre
    │                       ├── /api/public/*  → leitura (sem login)
@@ -83,7 +83,7 @@ Navegador ──HTTP──► Flask (Gunicorn/Waitress) ──SQLAlchemy──�
 │   └── js/{api,mapa,missoes,mestre,jogador}.js
 ├── tests/                 # pytest
 ├── docs/                  # documentação detalhada
-├── instance/app.db        # banco (NÃO versionado)
+├── instance/app.db        # SQLite local (fallback; NÃO versionado)
 ├── requirements.txt / requirements-dev.txt
 ├── .env / .env.example
 └── README.md
@@ -143,14 +143,18 @@ Exemplo de `.env`:
 SECRET_KEY=<cole aqui>
 MASTER_PASSWORD_HASH=<cole aqui>
 FLASK_ENV=development
+DATABASE_URL=postgresql://postgres:SUA_SENHA@db.SEU_PROJETO.supabase.co:5432/postgres
 ```
 
 > O valor de `MASTER_PASSWORD_HASH` deve começar com `scrypt:` **uma única vez**.
+> No `DATABASE_URL`, **não** inclua os colchetes ao redor da senha (eles são só o placeholder do Supabase). Sem `DATABASE_URL`, o app usa SQLite em `instance/app.db`.
 
-### 4. Criar o banco
+### 4. Criar/atualizar o banco
 
 ```bash
+# SQLite local (se não houver DATABASE_URL): cria a pasta
 mkdir instance            # Windows: New-Item -ItemType Directory -Force instance
+
 alembic upgrade head
 ```
 
@@ -205,6 +209,8 @@ Arquivos prontos para deploy:
 - `Procfile` — `gunicorn` (Heroku/Railway).
 - `render.yaml` — blueprint do Render.
 - `Dockerfile` — imagem Python 3.12 com migrations + Gunicorn.
+
+Variáveis de ambiente no host: `SECRET_KEY`, `MASTER_PASSWORD_HASH` e `DATABASE_URL` (Supabase). O `startCommand`/`CMD` roda `alembic upgrade head` antes de subir o servidor.
 
 ## Documentação
 
