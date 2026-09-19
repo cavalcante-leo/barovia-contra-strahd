@@ -19,7 +19,7 @@ Aplicação **cliente-servidor** de três camadas, executada em um único proces
                 │ SQLAlchemy Session
                 ▼
 ┌──────────────────────────────┐
-│      SQLite (instance/app.db)│
+│      PostgreSQL (Supabase)   │
 │      schema via Alembic      │
 └──────────────────────────────┘
 ```
@@ -30,7 +30,7 @@ Aplicação **cliente-servidor** de três camadas, executada em um único proces
 |---|---|
 | `app.py` | Cria o app Flask, registra blueprints e define as páginas. Protege `/mestre/`. |
 | `config.py` | Carrega `.env` e define `SECRET_KEY`, `MASTER_PASSWORD_HASH`, `DB_PATH` e cookies de sessão. |
-| `db.py` | Engine SQLite (WAL, `foreign_keys`, `busy_timeout`) e sessão `scoped_session` por request. |
+| `db.py` | Engine PostgreSQL (Supabase) com `pool_pre_ping`, ou SQLite local (fallback); sessão `scoped_session` por request. |
 | `models.py` | Modelos: `Estado`, `Tropa`, `Aliado`, `Local`, `Missao`, `MissaoTropa`, `MissaoAliado`. Inclui `ensure_estado()` (cria a linha única de estado, idempotente). |
 | `api/auth.py` | Login/logout/status com hash do Werkzeug e sessão Flask. |
 | `api/public.py` | Leitura pública (estado e missões). |
@@ -81,10 +81,10 @@ locais ──< missoes >── missao_tropas >── tropas
 | Sem rolagem/resolução | Simplifica e evita automação indevida. |
 | Uma página por perfil | Menos navegação e código. |
 | Frontend sem framework | CRUD simples + mapa em pointer events; vanilla é suficiente. |
-| SQLite + WAL | Arquivo único, backup trivial e leitura concorrente. |
+| PostgreSQL (Supabase) | Persistência gerenciada e acesso concorrente; SQLite local como fallback em dev/testes. |
 
 ## Limitações conhecidas
 
-- SQLite não é indicado para muitos escritores simultâneos (ok para uma mesa).
+- O SQLite local (fallback) não é indicado para muitos escritores simultâneos (ok para uma mesa).
 - Sem versionamento otimista: assume um mestre editando por vez.
 - Sem autenticação para jogadores (por design).

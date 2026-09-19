@@ -5,9 +5,12 @@ import pytest
 from werkzeug.security import generate_password_hash
 
 # Banco temporário e credenciais de teste ANTES de importar o app.
+# Força SQLite nos testes (ignora o Postgres/Supabase do .env).
 _tmp = tempfile.NamedTemporaryFile(prefix='conselho-test-', suffix='.db', delete=False)
 _tmp.close()
 os.environ['DB_PATH'] = _tmp.name
+os.environ['DATABASE_URL'] = ''
+os.environ['connection_string'] = ''
 os.environ['SECRET_KEY'] = 'test-secret'
 os.environ['MASTER_PASSWORD_HASH'] = generate_password_hash('mestre')
 
