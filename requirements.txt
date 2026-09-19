@@ -6,3 +6,4 @@ alembic==1.13.2
 psycopg2-binary==2.9.9
 gunicorn==22.0.0 ; sys_platform != "win32"
 waitress==3.0.0  ; sys_platform == "win32"
+pytest>=8,<9
